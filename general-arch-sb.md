@@ -1,4 +1,4 @@
-# general arch linux installation w/ secure boot signing
+# tech memo: general Arch Linux installation with encryption w/signing
 
 ## resize ssd drive to make room for linux installation
 
@@ -199,8 +199,8 @@ fallback_options="-S autodetect"
 ### prepare the signing key, and generate the main EFI
 ```bash
 sbctl create-keys
-sbctl -s /boot/EFI/BOOT/BOOTx64.EFI
-sbctl -s /boot/EFI/FLBK/FLBKx64.EFI
+sbctl sign -s /boot/EFI/BOOT/BOOTx64.EFI
+sbctl sign -s /boot/EFI/FLBK/FLBKx64.EFI
 mkinitcpio -P
 ```
 
