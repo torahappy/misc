@@ -16,6 +16,6 @@ tshark -r capture.pcapng -q -z io,phs,tls -o "tls.keylog_file:$PWD/keylog" -q
 tshark -r capture.pcapng -q -o tls.keylog_file:keylog --export-objects http,dest
 ```
 
-Please note that once `previous packet not captured` error occurs, Wireshark cannot parse http2 packets afterwards (for http/1.1 over TLS there's no such problem i guess?). Therefore, if that error happens, you should restart the browser and access to the website again. The problem is that CUI tshark cannot tell you about TCP errors. Only the GUI Wireshark can (just set the filter to `tcp.analysis.lost_segment`). so yeah packet capturing is difficult.
+Please note that once `previous packet not captured` error occurs, Wireshark cannot parse http2 packets afterwards (for http/1.1 over TLS there's no such problem i guess?). Therefore, if that error happens, you should restart the browser and access to the website again. The problem is that CUI tshark cannot tell you about TCP errors. Only the GUI Wireshark can (just set the filter to `tcp.analysis.lost_segment`). You can also try deactivating http2 in the browser (in Firefox, access `about:config` and flip the `network.http.http2.enabled` value) but that's not slay. so yeah packet capturing is difficult.
 
 
