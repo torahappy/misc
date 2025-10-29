@@ -16,8 +16,13 @@ popd
 
 pushd whisper.cpp
 export LD_LIBRARY_PATH="$SCRIPT_DIR/bin/lib:$SCRIPT_DIR/bin/lib64"
-cmake -B build -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=FLAME -DBLAS_INCLUDE_DIRS="$SCRIPT_DIR/bin/include/" -DCMAKE_INSTALL_PREFIX="$SCRIPT_DIR/bin/"
-cmake --build build --config Release
+if ! command -v nvcc >/dev/null 2>&1
+then
+    cmake -B build -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=FLAME -DBLAS_INCLUDE_DIRS="$SCRIPT_DIR/bin/include/" -DCMAKE_INSTALL_PREFIX="$SCRIPT_DIR/bin/"
+else
+    cmake -B build -DGGML_CUDA=ON -DGGML_BLAS=ON -DGGML_BLAS_VENDOR=FLAME -DBLAS_INCLUDE_DIRS="$SCRIPT_DIR/bin/include/" -DCMAKE_INSTALL_PREFIX="$SCRIPT_DIR/bin/"
+fi
+cmake --build build --config Release -j$(echo $(nproc) 2 / p | dc)
 pushd build
 make install
 popd
