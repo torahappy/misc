@@ -5,10 +5,15 @@ from numpy.typing import NDArray
 import scipy.io.wavfile as wavfile
 import numpy as np
 import typing
-import matplotlib.pyplot as plt
-import scipy.signal as signal
 
-parser = argparse.ArgumentParser(prog=str(os.path.basename(__file__)), description='split long wav file to smaller wav files')
+class CustomHelpFormatter(argparse.HelpFormatter):
+    def _get_help_string(self, action):
+        help = action.help
+        if action.default is not argparse.SUPPRESS and help is not None:
+            help += f' [default: {action.default}]'
+        return help
+
+parser = argparse.ArgumentParser(prog=str(os.path.basename(__file__)), description='split long wav file to smaller wav files', formatter_class=CustomHelpFormatter)
 parser.add_argument('filename')
 parser.add_argument('--window', type=int, default=100, help='the duration to calculate the silence index (in milliseconds)')
 parser.add_argument('--segment_length', type=int, default=90000, help='the standard duration of each segment (in milliseconds)')
