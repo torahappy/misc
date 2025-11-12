@@ -1,0 +1,16 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: long_audio_split",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./long_audio_split.py",
+            "console": "integratedTerminal",
+            "args": ["./orig_long/long.wav"]
+        }
+    ]
+}

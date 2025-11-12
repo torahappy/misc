@@ -1,5 +1,7 @@
 bin
+venv
 blis
 whisper.cpp
 orig
+orig_long
 out.json
