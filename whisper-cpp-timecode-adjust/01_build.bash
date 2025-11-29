@@ -5,16 +5,23 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 cd "$SCRIPT_DIR"
 
-git clone https://github.com/ggml-org/whisper.cpp
-git clone https://github.com/flame/blis
+if [[ ! -d whisper.cpp ]]; then
+  git clone https://github.com/ggml-org/whisper.cpp
+fi
+
+if [[ ! -d blis ]]; then
+  git clone https://github.com/flame/blis
+fi
 
 pushd blis
+git pull
 ./configure --prefix="$SCRIPT_DIR/bin" --enable-cblas -t openmp,pthreads auto
 make -j
 make install
 popd
 
 pushd whisper.cpp
+git pull
 export LD_LIBRARY_PATH="$SCRIPT_DIR/bin/lib:$SCRIPT_DIR/bin/lib64"
 if ! command -v nvcc >/dev/null 2>&1
 then
